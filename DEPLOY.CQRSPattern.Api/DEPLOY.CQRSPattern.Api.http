@@ -1,0 +1,6 @@
+@DEPLOY.CQRSPattern.Api_HostAddress = http://localhost:5076
+
+GET {{DEPLOY.CQRSPattern.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
