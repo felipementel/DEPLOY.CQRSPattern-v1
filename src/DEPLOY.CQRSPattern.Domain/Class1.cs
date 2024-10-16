@@ -1,4 +1,5 @@
-﻿namespace DEPLOY.CQRSPattern.Domain;
+﻿using DEPLOY.CQRSPattern.Domain.Commands;
+using DEPLOY.CQRSPattern.Domain.Queries;
 
 namespace DEPLOY.CQRSPattern.Domain.Commands
 {

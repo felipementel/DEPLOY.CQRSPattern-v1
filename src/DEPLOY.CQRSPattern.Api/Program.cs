@@ -1,3 +1,8 @@
+using DEPLOY.CQRSPattern.Api;
+using DEPLOY.CQRSPattern.Application.Handlers;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,25 +10,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var commandHandlerTypes = assembly.GetTypes()
+
+var commandHandlerTypes = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>)))
                 .ToList();
 
-            foreach (var handlerType in commandHandlerTypes)
-            {
-                var interfaceType = handlerType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
-                services.AddTransient(interfaceType, handlerType);
-            }
+foreach (var handlerType in commandHandlerTypes)
+{
+    var interfaceType = handlerType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
+    builder.Services.AddTransient(interfaceType, handlerType);
+}
 
-            var queryHandlerTypes = assembly.GetTypes()
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)))
-                .ToList();
+var queryHandlerTypes = Assembly.GetExecutingAssembly().GetTypes()
+    .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)))
+    .ToList();
 
-            foreach (var handlerType in queryHandlerTypes)
-            {
-                var interfaceType = handlerType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>));
-                services.AddTransient(interfaceType, handlerType);
-            }
+foreach (var handlerType in queryHandlerTypes)
+{
+    var interfaceType = handlerType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>));
+    builder.Services.AddTransient(interfaceType, handlerType);
+}
 
 
 var app = builder.Build();

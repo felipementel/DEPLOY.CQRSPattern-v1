@@ -1,4 +1,8 @@
-﻿namespace DEPLOY.CQRSPattern.Infrastructure;
+﻿using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
+using DEPLOY.CQRSPattern.Infrastructure.MessageBroker.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DEPLOY.CQRSPattern.Infrastructure.MessageBroker.Configuration
 {
@@ -9,11 +13,6 @@ namespace DEPLOY.CQRSPattern.Infrastructure.MessageBroker.Configuration
     }
 }
 
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Microsoft.Extensions.Options;
-using DEPLOY.CQRSPattern.Infrastructure.MessageBroker.Configuration;
 
 namespace DEPLOY.CQRSPattern.Infrastructure.MessageBroker.Services
 {
